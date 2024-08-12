@@ -5,9 +5,13 @@ import { db } from '@/utils/dbConfig';
 import { Students } from '@/utils/schema';
 
 export async function generateStaticParams() {
-  // Example: fetch all student IDs to pre-render the pages
-  const students = await db.select().from(Students).execute();
-  return students.map(student => ({ studentId: student.uucms.toString() }));
+  try {
+      const results = await db.select().from(Students).execute();
+      return results.map(student => ({ id: student.uucms.toString() }));
+  } catch (error) {
+      console.error("Error fetching params:", error);
+      return []; // Or handle it accordingly
+  }
 }
 
 // export async function getStaticProps({ params }) {
