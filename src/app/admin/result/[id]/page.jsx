@@ -1,8 +1,8 @@
 // pages/[id].jsx
 
-import StudentPage from '@/components/StudentPage';
-import { db } from '@/utils/dbConfig';
-import { Students } from '@/utils/schema';
+import StudentPage from '../../../../Components/StudentPage';
+import { db } from '../../../../utils/dbConfig';
+import { Students } from '../../../../utils/schema';
 
 export async function generateStaticParams() {
   // Example: fetch all student IDs to pre-render the pages

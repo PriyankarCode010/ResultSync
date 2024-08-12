@@ -1,6 +1,6 @@
 import React from 'react'
-import Student from '@/Components/Student'
-import { authOptions } from '@/app/api/auth/route';
+import Student from '../../../Components/Student'
+import { authOptions } from '../../api/auth/[...nextauth]/route';
 import { getServerSession } from 'next-auth';
 
 export default async function page() {
