@@ -1,11 +1,11 @@
 "use client";
 import React, { useState } from 'react';
-import Sem1Report from '@/components/Sem1Report';
-import Sem2Report from '@/components/Sem2Report';
-import Sem3Report from '@/components/Sem3Report';
-import Sem4Report from '@/components/Sem4Report';
-import Sem5Report from '@/components/Sem5Report';
-import Sem6Report from '@/components/Sem6Report';
+import Sem1Report from '../../../Components/Sem1Report';
+import Sem2Report from '../../../Components/Sem2Report';
+import Sem3Report from '../../../Components/Sem3Report';
+import Sem4Report from '../../../Components/Sem4Report';
+import Sem5Report from '../../../Components/Sem5Report';
+import Sem6Report from '../../../Components/Sem6Report';
 
 const ReportPage = () => {
   const [selectedBatch, setSelectedBatch] = useState("21");
