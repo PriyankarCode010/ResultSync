@@ -4,7 +4,7 @@ import { db } from '../utils/dbConfig';
 import { Students, Sem1 } from '../utils/schema';
 import { eq, getTableColumns } from 'drizzle-orm';
 import React, { useState, useEffect } from 'react';
-import NivoPieChart from '../Components/NivoBarChart';
+import NivoBarChart from './NivoBarChart';
 import NivoBarChartReport from '../Components/NivoBarChartReport';
 
 // Function to classify marks into categories based on individual subject marks
