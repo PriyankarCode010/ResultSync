@@ -1,7 +1,7 @@
 import NavBar from "@/Components/NavBar";
 import SideBar from "@/Components/SideBar";
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { authOptions } from '@/app/api/auth/route';
 import { MdDashboard, MdSupervisedUserCircle } from "react-icons/md";
 
 export default async function layout({children}){

@@ -5,6 +5,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 
 export const authOptions = {
+  trustHost:true,
   providers: [
     CredentialsProvider({
       profile(profile) {
