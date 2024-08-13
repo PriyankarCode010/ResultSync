@@ -16,9 +16,16 @@ const userSchema = new Schema(
     uucms: {
       type: String,
       trim: true,
-      unique: function () {
-        return this.role === "student";
-      }, // Ensure UUCMS is unique for students
+      validate: {
+        validator: function (v) {
+          // Check uniqueness only if role is 'student'
+          if (this.role === "student") {
+            return mongoose.models.User.countDocuments({ uucms: v }).then(count => count === 0);
+          }
+          return true; // Skip uniqueness check for non-students
+        },
+        message: "UUCMS must be unique for students",
+      },
       required: function () {
         return this.role === "student";
       }, // Required only if the role is 'student'
@@ -30,7 +37,7 @@ const userSchema = new Schema(
       trim: true,
       lowercase: true,
       match: [
-        /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
+        /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
         "Please fill a valid email address",
       ],
     },

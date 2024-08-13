@@ -3,8 +3,6 @@ import { useState } from 'react';
 import Link from 'next/link';
 import ThemeToggle from './ThemeToggle';
 import { useRouter } from "next/navigation";
-import { Students } from '@/utils/schema';
-import { db } from '@/utils/dbConfig';
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -13,87 +11,83 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [gender, setGender] = useState("");
   const [caste, setCaste] = useState("");
-  const [error, setError] = useState("");
   const [section, setSection] = useState("");
+  const [error, setError] = useState("");
   const [role, setRole] = useState("student"); // Default to student role
-  const [sem, setSem] = useState("");
 
   const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!name || !password || !email || !gender || (role === "student" && (!uucms || !caste || !section))) {
-      setError("Please fill all the required fields");
+    // Validate form inputs
+    if (!name || !password || !email || !gender) {
+      setError("Please fill in all required fields.");
+      return;
+    }
+
+    if (role === "student" && (!uucms || !caste || !section)) {
+      setError("Please fill in all required fields for students.");
       return;
     }
 
     try {
       // Check if user already exists based on role
-      const resUserExists = await fetch("api/userExists", {
+      const resUserExists = await fetch("/api/userExists", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({ uucms: role === "student" ? uucms : "", email: role === "teacher" ? email : "" })
       });
+
+      if (!resUserExists.ok) {
+        throw new Error("Failed to check user existence.");
+      }
+
       const { user } = await resUserExists.json();
 
       if (user) {
-        setError("User already exists");
+        setError("User already exists.");
         return;
       }
 
-      if (role === "student") {
-        // Insert student into database
-        const result = await db.insert(Students).values({
-          name,
-          uucms,
-          gender,
-          caste,
-          section,
-          sem: "1",
-          batch: uucms.slice(5, 7)
-        });
-
-        if (result) {
-          console.log("Student data inserted");
-        }
-      }
-
       // Register the user
-      const res = await fetch("api/register", {
+      const res = await fetch("/api/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
           name,
-          uucms: role === "student" ? uucms : "",
+          uucms: role === "student" ? uucms : email,
           email,
           password,
           role,
           gender,
-          caste: role === "student" ? caste : ""
+          caste: role === "student" ? caste : "",
+          section: role === "student" ? section : ""
         })
       });
 
-      if (res.ok) {
-        setName("");
-        setEmail("");
-        setUucms("");
-        setPassword("");
-        setGender("");
-        setCaste("");
-        setSection("");
-        setRole("student");
-        router.push("/login");
-      } else {
-        setError("User registration failed");
+      if (!res.ok) {
+        const { error } = await res.json();
+        throw new Error(error || "User registration failed.");
       }
+
+      // Clear form on successful registration
+      setName("");
+      setEmail("");
+      setUucms("");
+      setPassword("");
+      setGender("");
+      setCaste("");
+      setSection("");
+      setRole("student");
+      router.push("/login");
     } catch (err) {
       console.error("An error occurred:", err);
-      setError("An error occurred. Please try again.");
+      setError(err.message || "An error occurred. Please try again.");
     }
   };
 
@@ -102,7 +96,9 @@ const Register = () => {
       <div className="w-full sm:w-96 drop-shadow-2xl p-5 rounded-lg border-t-4 bg-gray-100 border-blue-600 dark:bg-gray-700">
         <div className='flex flex-row justify-between mb-4'>
           <div className="text-3xl font-bold">Register</div>
-          <div className='text-2xl p-2 bg-gray-200 rounded-full'><ThemeToggle /></div>
+          <div className='text-2xl p-2 bg-gray-200 rounded-full'>
+            <ThemeToggle />
+          </div>
         </div>
         <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
           <div className="flex items-center space-x-4">
@@ -134,21 +130,21 @@ const Register = () => {
             type="text"
             placeholder="Username"
             value={name}
-            className="bg-white rounded-md px-4 py-2 focus:outline-none hover:bg-gray-200 active:bg-gray-200 dark:text-white dark:bg-gray-600 dark:placeholder:text-white dark:hover:bg-gray-500"
+            className="bg-white rounded-md px-4 py-2 focus:outline-none hover:bg-gray-200 dark:text-white dark:bg-gray-600 dark:placeholder:text-white dark:hover:bg-gray-500"
           />
           <input
             onChange={(e) => setEmail(e.target.value)}
             type="email"
             placeholder="Email"
             value={email}
-            className="bg-white rounded-md px-4 py-2 focus:outline-none hover:bg-gray-200 focus:border-blue-500 dark:text-white dark:bg-gray-600 dark:placeholder:text-white dark:hover:bg-gray-500"
+            className="bg-white rounded-md px-4 py-2 focus:outline-none hover:bg-gray-200 dark:text-white dark:bg-gray-600 dark:placeholder:text-white dark:hover:bg-gray-500"
           />
           <input
             onChange={(e) => setPassword(e.target.value)}
             type="password"
             placeholder="Password"
             value={password}
-            className="bg-white rounded-md px-4 py-2 focus:outline-none hover:bg-gray-200 active:bg-gray-200 dark:text-white dark:bg-gray-600 dark:placeholder:text-white dark:hover:bg-gray-500"
+            className="bg-white rounded-md px-4 py-2 focus:outline-none hover:bg-gray-200 dark:text-white dark:bg-gray-600 dark:placeholder:text-white dark:hover:bg-gray-500"
           />
 
           {role === "student" && (
@@ -158,7 +154,7 @@ const Register = () => {
                 type="text"
                 placeholder="UUCMS / ID"
                 value={uucms}
-                className="bg-white rounded-md px-4 py-2 focus:outline-none hover:bg-gray-200 active:bg-gray-200 dark:text-white dark:bg-gray-600 dark:placeholder:text-white dark:hover:bg-gray-500"
+                className="bg-white rounded-md px-4 py-2 focus:outline-none hover:bg-gray-200 dark:text-white dark:bg-gray-600 dark:placeholder:text-white dark:hover:bg-gray-500"
               />
               <select
                 onChange={(e) => setSection(e.target.value)}
@@ -212,7 +208,9 @@ const Register = () => {
             Register
           </button>
           {error && <div className="bg-red-600 text-white px-2 py-1 rounded-lg w-fit">{error}</div>}
-          <div className='text-sm text-right'>Already have an account? <Link href="/login"><span className='hover:text-blue-700 hover:underline'>Login</span></Link></div>
+          <div className='text-sm text-right'>
+            Already have an account? <Link href="/login"><span className='hover:text-blue-700 hover:underline'>Login</span></Link>
+          </div>
         </form>
       </div>
     </div>
