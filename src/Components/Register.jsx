@@ -3,6 +3,8 @@ import { useState } from 'react';
 import Link from 'next/link';
 import ThemeToggle from './ThemeToggle';
 import { useRouter } from "next/navigation";
+import db from "../utils/dbConfig";
+import { Students } from '../utils/schema';
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -73,6 +75,18 @@ const Register = () => {
       if (!res.ok) {
         const { error } = await res.json();
         throw new Error(error || "User registration failed.");
+      }else{
+        if(role==="student"){
+          const result = await db.insert(Students).values({
+            id,
+            name,
+            uucms,
+            section,
+            sem,
+            batch,
+            caste
+          }).execute();
+        }
       }
 
       // Clear form on successful registration
