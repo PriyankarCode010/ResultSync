@@ -3,7 +3,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import ThemeToggle from './ThemeToggle';
 import { useRouter } from "next/navigation";
-import db from "../utils/dbConfig";
+import { db } from "../utils/dbConfig";
 import { Students } from '../utils/schema';
 
 const Register = () => {
@@ -54,6 +54,23 @@ const Register = () => {
         return;
       }
 
+      if (role === "student") {
+        // Insert student into database
+        const result = await db.insert(Students).values({
+          name,
+          uucms,
+          gender,
+          caste,
+          section,
+          sem: "1",
+          batch: uucms.slice(5, 7)
+        });
+
+        if (result) {
+          console.log("Student data inserted");
+        }
+      }
+
       // Register the user
       const res = await fetch("/api/register", {
         method: "POST",
@@ -77,18 +94,6 @@ const Register = () => {
         throw new Error(error || "User registration failed.");
       }
 
-      // Insert student data into the database if the role is student
-      if (role === "student") {
-        await db.insert(Students).values({
-          name,
-          uucms,
-          section,
-          caste,
-          gender,
-        }).execute();
-      }
-
-      // Clear form on successful registration
       setName("");
       setEmail("");
       setUucms("");
