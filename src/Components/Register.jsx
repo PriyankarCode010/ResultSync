@@ -75,18 +75,17 @@ const Register = () => {
       if (!res.ok) {
         const { error } = await res.json();
         throw new Error(error || "User registration failed.");
-      }else{
-        if(role==="student"){
-          const result = await db.insert(Students).values({
-            id,
-            name,
-            uucms,
-            section,
-            sem,
-            batch,
-            caste
-          }).execute();
-        }
+      }
+
+      // Insert student data into the database if the role is student
+      if (role === "student") {
+        await db.insert(Students).values({
+          name,
+          uucms,
+          section,
+          caste,
+          gender,
+        }).execute();
       }
 
       // Clear form on successful registration
