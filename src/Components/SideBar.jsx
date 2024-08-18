@@ -17,7 +17,7 @@ const SideBar = ({menuItem,session}) => {
                 <div className='flex justify-center items-center pb-5'>
                     <div className={`flex flex-row  overflow-hidden transition-all ${expanded ? "w-52" : "w-0"}`}>
                         <div className='rounded-full overflow-hidden'>
-                            <Image src="/pic1.jpg" width={50} height={50} />
+                            <Image src="/favicon.icon" width={50} height={50} />
                         </div>
                         <div className=' mx-4'>
                             <span className='font-bold text-white'>Sidebar</span>
