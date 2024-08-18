@@ -35,6 +35,7 @@ export const Sem1 = pgTable("Sem1", {
     lab2: integer("lab2").notNull().default(0),
     total: integer("total").notNull().default(0),
     per: varchar("per", { length: 20 }).notNull().default("0"),
+    editedBy: varchar("editedBy").notNull().default(""),
     status: boolean("status").notNull().default(false),
 });
 
@@ -55,6 +56,7 @@ export const Sem2 = pgTable("Sem2", {
     lab2: integer("lab2").notNull().default(0),
     total: integer("total").notNull().default(0),
     per: varchar("per", { length: 20 }).notNull().default("0"),
+    editedBy: varchar("editedBy").notNull().default(""),
     status: boolean("status").notNull().default(false),
 });
 
@@ -71,6 +73,7 @@ export const Sem3 = pgTable("Sem3", {
     lab2: integer("lab2").notNull().default(0),
     total: integer("total").notNull().default(0),
     per: varchar("per", { length: 20 }).notNull().default("0"),
+    editedBy: varchar("editedBy").notNull().default(""),
     status:boolean("status").notNull(false),
 });
 
@@ -87,6 +90,7 @@ export const Sem4 = pgTable("Sem4", {
     lab2: integer("lab2").notNull().default(0),
     total: integer("total").notNull().default(0),
     per: varchar("per", { length: 20 }).notNull().default("0"),
+    editedBy: varchar("editedBy").notNull().default(""),
     status:boolean("status").notNull(false),
 });
 
@@ -103,6 +107,7 @@ export const Sem5 = pgTable("Sem5", {
     lab2: integer("lab2").notNull().default(0),
     total: integer("total").notNull().default(0),
     per: varchar("per", { length: 20 }).notNull().default("0"),
+    editedBy: varchar("editedBy").notNull().default(""),
     status:boolean("status").notNull(false),
 });
 
@@ -118,6 +123,7 @@ export const Sem6 = pgTable("Sem6", {
     lab2: integer("lab2").notNull().default("0"),
     total:integer("total").notNull().default("0"),
     per: varchar("per", { length: 20 }).notNull().default("0"),
+    editedBy: varchar("editedBy").notNull().default(""),
     status:boolean("status").notNull(false),
 });
 
