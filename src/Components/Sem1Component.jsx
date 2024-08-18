@@ -6,7 +6,10 @@ import { Loader } from 'lucide-react';
 import { eq } from 'drizzle-orm';
 import NivoBarChart from "@/Components/NivoBarChart";
 
-const Sem1Component = ({ uucmsId, role }) => {
+const Sem1Component = ({ uucmsId, role, session }) => {
+
+  console.log("role",session?.user?.email)
+
   const [uucms, setUucms] = useState(uucmsId);
   const [batch, setBatch] = useState('');
   const [marks, setMarks] = useState({
@@ -25,6 +28,7 @@ const Sem1Component = ({ uucmsId, role }) => {
   const [loading, setLoading] = useState(false);
   const [editing, setEditing] = useState(null);
   const [newMark, setNewMark] = useState(0);
+  const [lastEdit,setLastEdit]= useState("");
 
   const passingThreshold = 35;
 
@@ -48,6 +52,7 @@ const Sem1Component = ({ uucmsId, role }) => {
               inc: data.lab1,
               eca: data.lab2,
             });
+            setLastEdit(data.editedBy);
           }
         } catch (error) {
           console.error('Error fetching data:', error.message);
@@ -94,6 +99,7 @@ const Sem1Component = ({ uucmsId, role }) => {
             total: totalMarks,
             per,
             cgpa,
+            editedBy:lastEdit,
             status
           })
           .where(eq(Sem1.uucms, uucms))
@@ -116,6 +122,7 @@ const Sem1Component = ({ uucmsId, role }) => {
             lab1: marks.hes,
             lab2: marks.eca,
             total: totalMarks,
+            editedBy:lastEdit,
             per,
             status
           })
@@ -142,9 +149,9 @@ const Sem1Component = ({ uucmsId, role }) => {
     } else {
       setMarks(prevMarks => ({ ...prevMarks, [subject]: newMark }));
       setEditing(null);
+      setLastEdit(session?.user?.email);
     }
-  };
-  
+  };  
 
   const handleChange = (e) => {
     setNewMark(parseInt(e.target.value, 10) || 0);
@@ -194,7 +201,7 @@ const Sem1Component = ({ uucmsId, role }) => {
                       <input
                         type="number"
                         onChange={handleChange}
-                        placeholder={`${newMark}`}
+                        placeholder={`${newMark}/100`}
                         className="w-full px-3 py-1 border border-gray-600 rounded-md bg-gray-700 text-gray-100 focus:outline-none focus:border-blue-500"
                       />
                     ) : (
@@ -227,15 +234,16 @@ const Sem1Component = ({ uucmsId, role }) => {
         </table>
 
         {role !== 'student' && (
-          <div className="mt-6">
+          <div className="flex justify-between items-center mt-6">
             <button
               onClick={handleUpdate}
               disabled={loading}
               className="bg-blue-900 hover:bg-blue-700 text-white px-4 py-2 rounded-md flex items-center gap-2"
             >
-              {loading && <Loader className='animate-spin' />}
+              {loading && <Loader className="animate-spin" />}
               Update Records
             </button>
+            <h2>Last edit: {lastEdit || 'N/A'}</h2>
           </div>
         )}
       </div>

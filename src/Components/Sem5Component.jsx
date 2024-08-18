@@ -6,7 +6,7 @@ import { Loader } from 'lucide-react';
 import { eq } from 'drizzle-orm';
 import NivoBarChart from "@/Components/NivoBarChart";
 
-const Sem5Component = ({ uucmsId, role }) => {
+const Sem5Component = ({ uucmsId, role,session }) => {
   const [uucms, setUucms] = useState(uucmsId);
   const [batch, setBatch] = useState('');
   const [marks, setMarks] = useState({
@@ -22,6 +22,8 @@ const Sem5Component = ({ uucmsId, role }) => {
   const [loading, setLoading] = useState(false);
   const [editing, setEditing] = useState(null);
   const [newMark, setNewMark] = useState(0);
+  const [lastEdit,setLastEdit]= useState("");
+
 
   const passingThreshold = 35;
 
@@ -42,6 +44,7 @@ const Sem5Component = ({ uucmsId, role }) => {
               pythlab: data.lab1,
               csharplab: data.lab2,
             });
+            setLastEdit(data.editedBy);
           }
         } catch (error) {
           console.error('Error fetching data:', error.message);
@@ -78,6 +81,7 @@ const Sem5Component = ({ uucmsId, role }) => {
             lab1: marks.pythlab,
             lab2: marks.csharplab,
             total: totalMarks,
+            editedBy:lastEdit,
             per,
             status
           })
@@ -98,6 +102,7 @@ const Sem5Component = ({ uucmsId, role }) => {
             lab1: marks.pythlab,
             lab2: marks.csharplab,
             total: totalMarks,
+            editedBy:lastEdit,
             per,
             status
           })
@@ -124,9 +129,9 @@ const Sem5Component = ({ uucmsId, role }) => {
     } else {
       setMarks(prevMarks => ({ ...prevMarks, [subject]: newMark }));
       setEditing(null);
+      setLastEdit(session?.user?.email);
     }
-  };
-  
+  };  
 
   const handleChange = (e) => {
     setNewMark(parseInt(e.target.value, 10) || 0);
@@ -209,15 +214,16 @@ const Sem5Component = ({ uucmsId, role }) => {
         </table>
 
         {role !== 'student' && (
-          <div className="mt-6">
+          <div className="flex justify-between items-center mt-6">
             <button
               onClick={handleUpdate}
               disabled={loading}
               className="bg-blue-900 hover:bg-blue-700 text-white px-4 py-2 rounded-md flex items-center gap-2"
             >
-              {loading && <Loader className='animate-spin' />}
+              {loading && <Loader className="animate-spin" />}
               Update Records
             </button>
+            <h2>Last edit: {lastEdit || 'N/A'}</h2>
           </div>
         )}
       </div>
