@@ -7,7 +7,7 @@ import { db } from '@/utils/dbConfig';
 import { Students } from '@/utils/schema';
 import { eq } from 'drizzle-orm';
 
-const StudentPage = ({ studentId }) => {
+const StudentPage = ({ studentId, session }) => {
   const [selectedSem, setSelectedSem] = useState("sem1");
   const [currStudent, setCurrStudent] = useState(null);
 
@@ -49,7 +49,7 @@ const StudentPage = ({ studentId }) => {
           </select>
         </div>
       </div>
-      <MainResultPage semester={selectedSem} id={studentId} />
+      <MainResultPage semester={selectedSem} id={studentId} session={session} />
     </div>
   );
 };
