@@ -129,9 +129,16 @@ const Sem2Component = ({ uucmsId, role }) => {
   };
 
   const handleSaveClick = (subject) => {
-    setMarks(prevMarks => ({ ...prevMarks, [subject]: newMark }));
-    setEditing(null);
+    if (isNaN(newMark) || newMark < 0) {
+      alert("Please enter a positive number.");
+    } else if (newMark > 100) {
+      alert("Please enter a valid mark (0-100).");
+    } else {
+      setMarks(prevMarks => ({ ...prevMarks, [subject]: newMark }));
+      setEditing(null);
+    }
   };
+  
 
   const handleChange = (e) => {
     setNewMark(parseInt(e.target.value, 10) || 0);
