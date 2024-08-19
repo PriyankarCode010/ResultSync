@@ -10,21 +10,22 @@ import Sem6Report from '../../../Components/Sem6Report';
 const ReportPage = () => {
   const [selectedBatch, setSelectedBatch] = useState("21");
   const [selectedSem, setSelectedSem] = useState("1");
+  const [section, setSection] = useState("");
 
   const renderReport = () => {
     switch (selectedSem) {
       case '1':
-        return <Sem1Report batch={selectedBatch} />;
+        return <Sem1Report batch={selectedBatch} section={section} />;
       case '2':
-        return <Sem2Report batch={selectedBatch} />;
+        return <Sem2Report batch={selectedBatch} section={section} />;
       case '3':
-        return <Sem3Report batch={selectedBatch} />;
+        return <Sem3Report batch={selectedBatch} section={section} />;
       case '4':
-        return <Sem4Report batch={selectedBatch} />;
+        return <Sem4Report batch={selectedBatch} section={section} />;
       case '5':
-        return <Sem5Report batch={selectedBatch} />;
+        return <Sem5Report batch={selectedBatch} section={section} />;
       case '6':
-        return <Sem6Report batch={selectedBatch} />;
+        return <Sem6Report batch={selectedBatch} section={section} />;
       default:
         return <div>Please select a valid semester.</div>;
     }
@@ -32,7 +33,7 @@ const ReportPage = () => {
 
   return (
     <div className='p-9'>
-      <div className='flex gap-5'>
+      <div className='flex flex-col md:flex-row gap-5 mb-4'>
         <div className='mb-4'>
           <label htmlFor="batch" className='mr-2'>Select Batch:</label>
           <select
@@ -49,7 +50,7 @@ const ReportPage = () => {
         </div>
 
         <div className='mb-4'>
-          <label htmlFor="sem" className='mr-2'>Select Sem:</label>
+          <label htmlFor="sem" className='mr-2'>Select Semester:</label>
           <select
             id="sem"
             value={selectedSem}
@@ -62,6 +63,21 @@ const ReportPage = () => {
             <option value="4">Sem 4</option>
             <option value="5">Sem 5</option>
             <option value="6">Sem 6</option>
+          </select>
+        </div>
+
+        <div className='mb-4'>
+          <label htmlFor="section" className='mr-2'>Select Section:</label>
+          <select
+            id="section"
+            value={section}
+            onChange={(e) => setSection(e.target.value)}
+            className='p-2 border rounded'
+          >
+            <option value="">ALL</option>
+            <option value="A">A</option>
+            <option value="B">B</option>
+            <option value="C">C</option>
           </select>
         </div>
       </div>
