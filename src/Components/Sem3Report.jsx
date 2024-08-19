@@ -105,7 +105,7 @@ const prepareSubjectOverallAndGenderData = (data) => {
   return { subjectPieData, overallBarDataByCaste, genderData, barGenderData };
 };
 
-export default function Sem3Report({ batch }) {
+export default function Sem3Report({ batch, section }) {
   const [data, setData] = useState(null);
   const [pieData, setPieData] = useState(null);
   const [barDataByCaste, setBarDataByCaste] = useState(null);
@@ -123,6 +123,7 @@ export default function Sem3Report({ batch }) {
       .leftJoin(Students, eq(Students.uucms, Sem3.uucms))
       .where(eq(Students.verified, true))
       .where(eq(Sem3.batch, batch))
+      .where(eq(Students.section, section))
       .execute();
 
       setData(result);

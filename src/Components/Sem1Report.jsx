@@ -2,7 +2,7 @@
 
 import { db } from '../utils/dbConfig';
 import { Students, Sem1 } from '../utils/schema';
-import { eq, getTableColumns } from 'drizzle-orm';
+import { eq, getTableColumns, and } from 'drizzle-orm';
 import React, { useState, useEffect } from 'react';
 import NivoPieChart from './NivoPieChart';
 import NivoBarChartReport from '../Components/NivoBarChartReport';
@@ -105,7 +105,10 @@ const prepareSubjectOverallAndGenderData = (data) => {
   return { subjectPieData, overallBarDataByCaste, genderData, barGenderData };
 };
 
-export default function Sem1Report({ batch }) {
+export default function Sem1Report({ batch, section }) {
+
+  console.log(batch)
+
   const [data, setData] = useState(null);
   const [pieData, setPieData] = useState(null);
   const [barDataByCaste, setBarDataByCaste] = useState(null);
@@ -121,8 +124,7 @@ export default function Sem1Report({ batch }) {
       })
       .from(Sem1)
       .leftJoin(Students, eq(Students.uucms, Sem1.uucms))
-      .where(eq(Students.verified, true))
-      .where(eq(Sem1.batch, batch))
+      .where(and(eq(Students.verified, true), eq(Sem1.batch, batch), eq(Students.section, section)))
       .execute();
 
       setData(result);
@@ -137,12 +139,12 @@ export default function Sem1Report({ batch }) {
   };
 
   useEffect(() => {
-    fetchData(); // Fetch data when batch changes
-  }, [batch]);
+    fetchData(); // Fetch data when batch or section changes
+  }, [batch, section]);
 
   return (
     <div className='p-9'>
-        <h3 className='flex gap-5 text-3xl font-bold'>Batch :-  {batch}  {"        Semester :- 1"}</h3>
+      <h3 className='flex gap-5 text-3xl font-bold'>Batch: {batch} {" "} Semester: 1</h3>
       {genderData && genderData.length > 0 && (
         <div className='mt-9'>
           <h3 className='text-2xl font-bold'>Gender Classification</h3>
