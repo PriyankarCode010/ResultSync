@@ -36,7 +36,13 @@ export default async function layout({children}){
               title: "Reports",
               path: "/admin/reports",
               icon: <MdSupervisedUserCircle className='h-10 w-10'/>,
-          },
+            },
+            {
+              id: 5,
+              title: "Scorers",
+              path: "/admin/students",
+              icon: <MdSupervisedUserCircle className='h-10 w-10'/>,
+            },
         ],
       },
   ];
