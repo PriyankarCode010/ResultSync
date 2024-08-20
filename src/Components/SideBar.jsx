@@ -53,7 +53,10 @@ const SideBar = ({menuItem,session}) => {
                             <div>
                                 <div className="leading-4">
                                     <h4 className="font-semibold">{session?.user?.name}</h4>
-                                    <span className="text-xs">{(session?.user?.uucms)}</span>
+                                    {
+                                        (session?.user?.role === "student")?<span className="text-xs">{(session?.user?.uucms)}</span>:
+                                            <></>
+                                    }
                                 </div>
                             </div>
                         </div>
