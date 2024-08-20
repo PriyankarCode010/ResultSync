@@ -60,7 +60,11 @@ export default function Result() {
     try {
       // Increment the semester for promotion
       const newSemester = (parseInt(student.sem) + 1).toString();
-      await db.update(Students).set({ sem: newSemester }).where(eq(Students.uucms, student.uucms)).execute();
+      if (student.sem <= 6){
+        await db.update(Students).set({ sem: newSemester }).where(eq(Students.uucms, student.uucms)).execute();
+      }else{
+        alert("sem must be under 6")
+      }
       // Update local state
       const updatedData = data.map((item) =>
         item.uucms === student.uucms ? { ...item, sem: newSemester } : item
