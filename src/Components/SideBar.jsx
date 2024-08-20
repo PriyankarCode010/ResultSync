@@ -47,7 +47,7 @@ const SideBar = ({menuItem,session}) => {
                     <div className="absolute inset-x-0 bottom-0 border-t flex items-center justify-center text-white dark:text-white">
                         <div className={`flex justify-between items-center overflow-hidden transition-all ${expanded ? "w-52 p-4" : "w-0 "}`}>
                         <span className={`${expanded?"p-1":"px-4 py-1"}`}>
-                            <Image src="src/app/user.png" alt="logo"/>
+                            <Image src="/user.png" alt="logo"/>
                         </span>
                             <div>
                                 <div className="leading-4">
