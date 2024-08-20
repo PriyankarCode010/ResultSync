@@ -16,7 +16,7 @@ const SideBar = ({menuItem,session}) => {
             <div className='p-4'>
                 <div className='flex justify-center items-center pb-5'>
                     <div className={`flex flex-row  overflow-hidden transition-all ${expanded ? "w-52" : "w-0"}`}>
-                        <div className='rounded-full overflow-hidden flex justify-center items-center'>
+                        <div className='rounded-full overflow-hidden flex justify-center items-center gap-2'>
                             <Image src="/favicon.ico" width={50} height={50} />
                             <h2>ResultSync</h2>
                         </div>

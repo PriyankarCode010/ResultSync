@@ -3,6 +3,10 @@ import SideBar from "@/Components/SideBar";
 import { MdDashboard, MdSupervisedUserCircle } from "react-icons/md";
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { GiTeacher } from "react-icons/gi";
+import { PiStudentFill } from "react-icons/pi";
+import { TbReportSearch } from "react-icons/tb";
+import { GrTrophy } from "react-icons/gr";
 
 export default async function layout({children}){
 
@@ -23,25 +27,25 @@ export default async function layout({children}){
               id: 2,
               title: "Manage Teacher",
               path: `/admin/teachers`,
-              icon: <MdDashboard className='h-10 w-10'/>,
+              icon: <GiTeacher className='h-10 w-10'/>,
             },
             {
                 id: 3,
                 title: "Student Results",
                 path: "/admin/result",
-                icon: <MdSupervisedUserCircle className='h-10 w-10'/>,
+                icon: <PiStudentFill className='h-10 w-10'/>,
             },
             {
               id: 4,
               title: "Reports",
               path: "/admin/reports",
-              icon: <MdSupervisedUserCircle className='h-10 w-10'/>,
+              icon: <TbReportSearch className='h-10 w-10'/>,
             },
             {
               id: 5,
               title: "Scorers",
               path: "/admin/students",
-              icon: <MdSupervisedUserCircle className='h-10 w-10'/>,
+              icon: <GrTrophy className='h-10 w-10'/>,
             },
         ],
       },

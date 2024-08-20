@@ -3,6 +3,7 @@ import SideBar from "@/Components/SideBar";
 import { MdDashboard, MdSupervisedUserCircle } from "react-icons/md";
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { MdAssignmentTurnedIn } from "react-icons/md";
 
 export default async function layout({children}){
 
@@ -29,7 +30,7 @@ export default async function layout({children}){
               id: 3,
               title: "Assisgnment",
               path: "/teacher/assignment",
-              icon: <MdSupervisedUserCircle className='h-10 w-10'/>,
+              icon: <MdAssignmentTurnedIn className='h-10 w-10'/>,
           },
         ],
       },
