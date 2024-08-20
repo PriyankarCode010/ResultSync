@@ -1,6 +1,6 @@
 import NavBar from "@/Components/NavBar";
 import SideBar from "@/Components/SideBar";
-import { MdDashboard, MdSupervisedUserCircle } from "react-icons/md";
+import { CgProfile } from "react-icons/cg";
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { GiTeacher } from "react-icons/gi";
@@ -21,7 +21,7 @@ export default async function layout({children}){
                 id: 1,
                 title: "Profile",
                 path: `/admin`,
-                icon: <MdDashboard className='h-10 w-10'/>,
+                icon: <CgProfile className='h-10 w-10'/>,
             },
             {
               id: 2,

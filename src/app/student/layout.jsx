@@ -2,7 +2,8 @@ import NavBar from "../../Components/NavBar";
 import SideBar from "../../Components/SideBar";
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../api/auth/[...nextauth]/route';
-import { MdDashboard, MdSupervisedUserCircle } from "react-icons/md";
+import { PiStudentFill } from "react-icons/pi";
+import { CgProfile } from "react-icons/cg";
 
 export default async function layout({children}){
 
@@ -17,13 +18,13 @@ export default async function layout({children}){
                 id: 1,
                 title: "Profile",
                 path: `/student`,
-                icon: <MdDashboard className='h-10 w-10'/>,
+                icon: <CgProfile className='h-10 w-10'/>,
             },
             {
               id: 2,
                 title: "Results",
                 path: "/student/result",
-                icon: <MdSupervisedUserCircle className='h-10 w-10'/>,
+                icon: <PiStudentFill className='h-10 w-10'/>,
             },
         ],
       },
