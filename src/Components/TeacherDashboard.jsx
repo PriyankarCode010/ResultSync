@@ -11,7 +11,7 @@ const TeacherDashboard = ({name,email}) => {
         <div className="flex flex-col items-center space-y-4">
           <div className="relative">
             <img
-              src="/default-profile.jpg" // Use a default profile image or replace with a real one
+              src="/user.png" // Use a default profile image or replace with a real one
               alt="Profile"
               className="w-32 h-32 rounded-full border-4 border-blue-600"
             />
