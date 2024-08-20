@@ -4,7 +4,6 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { RiMenu2Fill,RiMenu3Fill } from "react-icons/ri";
 import ThemeToggle from './ThemeToggle';
-import user from "../../public/user.png"
 
 const SideBar = ({menuItem,session}) => {
 
@@ -49,7 +48,7 @@ const SideBar = ({menuItem,session}) => {
                     <div className="absolute inset-x-0 bottom-0 border-t flex items-center justify-center text-white dark:text-white">
                         <div className={`flex justify-between items-center overflow-hidden transition-all ${expanded ? "w-52 p-4" : "w-0 "}`}>
                         <div className={`${expanded?"p-1":"px-4 py-1"}`}>
-                            <Image src={user} width={50} height={50} alt="User Image" />
+                            <Image src="/user.png" width={50} height={50} alt="User Image" />
                         </div>
                             <div>
                                 <div className="leading-4">
