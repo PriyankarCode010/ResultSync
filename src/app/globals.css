@@ -2,17 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Custom utility class to hide scrollbar */
+/* Custom utility class to hide scrollbar
 .no-scrollbar {
-  /* Prevent overflow issues with rounded corners */
-  @apply overflow-auto; /* or use overflow-scroll if you want to ensure scrolling is enabled */
+  @apply overflow-auto; 
 }
 
 .no-scrollbar::-webkit-scrollbar {
-  display: none; /* Hide scrollbar for WebKit browsers */
+  display: none;
 }
 
 .no-scrollbar {
-  -ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
-  scrollbar-width: none; /* Hide scrollbar for Firefox */
-}
+  -ms-overflow-style: none; 
+  scrollbar-width: none; 
+} */
