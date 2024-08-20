@@ -2,9 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-/* styles/globals.css */
+/* Custom utility class to hide scrollbar */
 .no-scrollbar {
-  @apply overflow-hidden; /* Hide overflow */
+  /* Prevent overflow issues with rounded corners */
+  @apply overflow-auto; /* or use overflow-scroll if you want to ensure scrolling is enabled */
 }
 
 .no-scrollbar::-webkit-scrollbar {
