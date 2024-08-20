@@ -16,7 +16,7 @@ const SideBar = ({menuItem,session}) => {
             <div className='p-4'>
                 <div className='flex justify-center items-center pb-5'>
                     <div className={`flex flex-row  overflow-hidden transition-all ${expanded ? "w-52" : "w-0"}`}>
-                        <div className='rounded-full overflow-hidden'>
+                        <div className='rounded-full overflow-hidden flex justify-center items-center'>
                             <Image src="/favicon.ico" width={50} height={50} />
                         </div>
                         <div className=' mx-4'>
@@ -47,7 +47,7 @@ const SideBar = ({menuItem,session}) => {
                     <div className="absolute inset-x-0 bottom-0 border-t flex items-center justify-center text-white dark:text-white">
                         <div className={`flex justify-between items-center overflow-hidden transition-all ${expanded ? "w-52 p-4" : "w-0 "}`}>
                         <span className={`${expanded?"p-1":"px-4 py-1"}`}>
-                            <Image src="/user.png" alt="logo"/>
+                            <Image src="src/app/user.png" alt="logo"/>
                         </span>
                             <div>
                                 <div className="leading-4">
