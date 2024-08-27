@@ -25,7 +25,8 @@ const Sem2Component = ({ uucmsId, role, session }) => {
   const [loading, setLoading] = useState(false);
   const [editing, setEditing] = useState(null);
   const [newMark, setNewMark] = useState(0);
-  const [lastEdit, setLastEdit] = useState("");
+  const [lastEdit,setLastEdit]= useState("");
+
 
   const passingThreshold = 35;
 
@@ -63,21 +64,16 @@ const Sem2Component = ({ uucmsId, role, session }) => {
     setLoading(true);
     try {
       console.log('Starting update...');
-
+      
       const totalMarks = Object.values(marks).reduce((acc, mark) => acc + mark, 0);
-      const totalPossibleMarks = 750; // Adjust if necessary
-      const percentage = (totalMarks / totalPossibleMarks) * 100;
+      const percentage = (totalMarks / 750) * 100;
       const per = percentage.toFixed(2);
-
-      // Adjust this conversion based on your grading scale
-      const cgpa = (percentage / 9.5).toFixed(2); // Adjust divisor if necessary
-
       const allPassed = Object.values(marks).every(mark => mark >= passingThreshold);
       const status = allPassed;
 
       const existingRecord = await db.select().from(Sem2).where(eq(Sem2.uucms, uucms)).execute();
       console.log('Existing Record:', existingRecord);
-
+      
       if (existingRecord.length > 0) {
         console.log('Updating record...');
         await db.update(Sem2)
@@ -94,9 +90,8 @@ const Sem2Component = ({ uucmsId, role, session }) => {
             lab1: marks.hes,
             lab2: marks.eca,
             total: totalMarks,
-            editedBy: lastEdit,
+            editedBy:lastEdit,
             per,
-            cgpa,
             status
           })
           .where(eq(Sem2.uucms, uucms))
@@ -107,7 +102,7 @@ const Sem2Component = ({ uucmsId, role, session }) => {
         await db.insert(Sem2)
           .values({
             uucms,
-            batch: uucms.slice(5, 7),
+            batch:uucms.slice(5,7),
             sub1: marks.eng,
             sub2: marks.hin,
             sub3: marks.dst,
@@ -119,9 +114,8 @@ const Sem2Component = ({ uucmsId, role, session }) => {
             lab1: marks.hes,
             lab2: marks.eca,
             total: totalMarks,
-            editedBy: lastEdit,
+            editedBy:lastEdit,
             per,
-            cgpa,
             status
           })
           .execute();
@@ -149,7 +143,7 @@ const Sem2Component = ({ uucmsId, role, session }) => {
       setEditing(null);
       setLastEdit(session?.user?.email);
     }
-  };
+  };  
 
   const handleChange = (e) => {
     setNewMark(parseInt(e.target.value, 10) || 0);
@@ -166,8 +160,13 @@ const Sem2Component = ({ uucmsId, role, session }) => {
   const highestSubject = Object.keys(marks).find(subject => marks[subject] === highestMark);
   const lowestSubject = Object.keys(marks).find(subject => marks[subject] === lowestMark);
 
+  const highestMarkPercentage = (highestMark / 100) * 100;
+  const lowestMarkPercentage = (lowestMark / 100) * 100;
+
+  const totalMarks = Object.values(marks).reduce((acc, mark) => acc + mark, 0);
+  const totalPossibleMarks = 1000; // Assuming the total possible marks is 750
   const overallPercentage = (totalMarks / totalPossibleMarks) * 100;
-  const cgpa = (overallPercentage / 9.5).toFixed(2); // Adjust divisor if necessary
+  const cgpa = (overallPercentage / 9.5).toFixed(2);
 
   return (
     <div className="h-fit flex flex-col md:flex-row gap-6 md:gap-12 p-6">
