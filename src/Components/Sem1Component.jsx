@@ -65,76 +65,77 @@ const Sem1Component = ({ uucmsId, role, session }) => {
   const handleUpdate = async () => {
     setLoading(true);
     try {
-      console.log('Starting update...');
-      
-      const totalMarks = Object.values(marks).reduce((acc, mark) => acc + mark, 0);
-      const totalPossibleMarks = 1000; // Total marks out of which percentage is calculated
-      const percentage = (totalMarks / totalPossibleMarks) * 100;
-      const per = percentage.toFixed(2);
+        console.log('Starting update...');
 
-      // Convert percentage to CGPA
-      const cgpa = (percentage / 9.5).toFixed(2);
+        const totalMarks = Object.values(marks).reduce((acc, mark) => acc + mark, 0);
+        const totalPossibleMarks = 750; // Total possible marks
+        const percentage = (totalMarks / totalPossibleMarks) * 100;
+        const per = percentage.toFixed(2);
 
-      const allPassed = Object.values(marks).every(mark => mark >= passingThreshold);
-      const status = allPassed;
+        // Convert percentage to CGPA, ensure CGPA is within the expected scale
+        const cgpa = (percentage / 9.5).toFixed(2); // Adjust the divisor if necessary
 
-      const existingRecord = await db.select().from(Sem1).where(eq(Sem1.uucms, uucms)).execute();
-      console.log('Existing Record:', existingRecord);
-      
-      if (existingRecord.length > 0) {
-        console.log('Updating record...');
-        await db.update(Sem1)
-          .set({
-            batch,
-            sub1: marks.eng,
-            sub2: marks.hin,
-            sub3: marks.cpr,
-            sub4: marks.cfn,
-            sub5: marks.mat,
-            sub6: marks.p_cp,
-            sub7: marks.pcf,
-            sub8: marks.poa,
-            lab1: marks.inc,
-            lab2: marks.eca,
-            total: totalMarks,
-            per,
-            cgpa,
-            editedBy:lastEdit,
-            status
-          })
-          .where(eq(Sem1.uucms, uucms))
-          .execute();
-        console.log('Record updated');
-      } else {
-        console.log('No existing record found with the provided UUCMS.');
-        await db.insert(Sem1)
-          .values({
-            uucms,
-            batch:uucms.slice(5,7),
-            sub1: marks.eng,
-            sub2: marks.hin,
-            sub3: marks.dst,
-            sub4: marks.wpg,
-            sub5: marks.nsm,
-            sub6: marks.dsl,
-            sub7: marks.nsl,
-            sub8: marks.wpl,
-            lab1: marks.hes,
-            lab2: marks.eca,
-            total: totalMarks,
-            editedBy:lastEdit,
-            per,
-            status
-          })
-          .execute();
-        console.log('New record inserted');
-      }
+        const allPassed = Object.values(marks).every(mark => mark >= passingThreshold);
+        const status = allPassed;
+
+        const existingRecord = await db.select().from(Sem1).where(eq(Sem1.uucms, uucms)).execute();
+        console.log('Existing Record:', existingRecord);
+
+        if (existingRecord.length > 0) {
+            console.log('Updating record...');
+            await db.update(Sem1)
+                .set({
+                    batch,
+                    sub1: marks.eng,
+                    sub2: marks.hin,
+                    sub3: marks.cpr,
+                    sub4: marks.cfn,
+                    sub5: marks.mat,
+                    sub6: marks.p_cp,
+                    sub7: marks.pcf,
+                    sub8: marks.poa,
+                    lab1: marks.inc,
+                    lab2: marks.eca,
+                    total: totalMarks,
+                    per,
+                    cgpa,
+                    editedBy: lastEdit,
+                    status
+                })
+                .where(eq(Sem1.uucms, uucms))
+                .execute();
+            console.log('Record updated');
+        } else {
+            console.log('No existing record found with the provided UUCMS.');
+            await db.insert(Sem1)
+                .values({
+                    uucms,
+                    batch: uucms.slice(5, 7),
+                    sub1: marks.eng,
+                    sub2: marks.hin,
+                    sub3: marks.cpr,
+                    sub4: marks.cfn,
+                    sub5: marks.mat,
+                    sub6: marks.p_cp,
+                    sub7: marks.pcf,
+                    sub8: marks.poa,
+                    lab1: marks.inc,
+                    lab2: marks.eca,
+                    total: totalMarks,
+                    editedBy: lastEdit,
+                    per,
+                    cgpa,
+                    status
+                })
+                .execute();
+            console.log('New record inserted');
+        }
     } catch (error) {
-      console.error('Error processing data:', error);
+        console.error('Error processing data:', error);
     } finally {
-      setLoading(false);
+        setLoading(false);
     }
-  };
+};
 
   const handleEditClick = (subject) => {
     setEditing(subject);
