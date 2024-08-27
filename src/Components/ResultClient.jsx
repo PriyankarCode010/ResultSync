@@ -121,7 +121,7 @@ function ResultClient({ session }) {
                   <th className="px-2 md:px-4 py-2">Batch</th>
                   <th className="px-2 md:px-4 py-2">Semester</th>
                   <th className="px-2 md:px-4 py-2">Verified</th>
-                  <th className="px-2 md:px-4 py-2">Actions</th>
+                  {session?.user?.role=="teacher" ? <th></th>:<th className="px-2 md:px-4 py-2">Actions</th>}
                 </tr>
               </thead>
               <tbody>
@@ -138,7 +138,10 @@ function ResultClient({ session }) {
                     <td className="px-2 md:px-4 py-2">{student.batch}</td>
                     <td className="px-2 md:px-4 py-2">{student.sem}</td>
                     <td className="px-2 md:px-4 py-2">{student.verified ? 'Yes' : 'No'}</td>
-                    <td className="px-2 md:px-4 py-2">
+                    {session?.user?.role === "teacher" ?
+                    <td>
+                    </td>
+                    :<td className="px-2 md:px-4 py-2">
                       <div className="flex gap-2">
                         <div className="flex gap-2">
                           <button
@@ -165,7 +168,7 @@ function ResultClient({ session }) {
                           </button>
                         </div>
                       </div>
-                    </td>
+                      </td>}
                   </tr>
                 ))}
               </tbody>
