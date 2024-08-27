@@ -164,7 +164,7 @@ const Sem2Component = ({ uucmsId, role, session }) => {
   const lowestMarkPercentage = (lowestMark / 100) * 100;
 
   const totalMarks = Object.values(marks).reduce((acc, mark) => acc + mark, 0);
-  const totalPossibleMarks = 750; // Assuming the total possible marks is 750
+  const totalPossibleMarks = 1000; // Assuming the total possible marks is 750
   const overallPercentage = (totalMarks / totalPossibleMarks) * 100;
   const cgpa = (overallPercentage / 9.5).toFixed(2);
 

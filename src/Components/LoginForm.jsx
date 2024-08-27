@@ -84,7 +84,7 @@ export default function LoginForm() {
           />
           <button type="submit" className="bg-green-700 text-white px-4 py-2 rounded-md hover:bg-green-600 focus:outline-none focus:bg-green-600 ">Login</button>
           {error && <div className="bg-red-600 text-white px-2 py-1 rounded-lg w-fit">{error}</div>}
-          <div className="flex hover:text-blue-500"><p onClick={handleReset}>Forgot Password?</p></div>
+          {/* <div className="flex hover:text-blue-500"><p onClick={handleReset}>Forgot Password?</p></div> */}
           <div className='text-sm text-right'>Don &apos; t have an account? <Link href="/register"><span className='hover:text-blue-700 hover:underline'>Register</span></Link></div>
         </form>
       </div>
