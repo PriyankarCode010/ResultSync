@@ -68,7 +68,7 @@ const Sem1Component = ({ uucmsId, role, session }) => {
         console.log('Starting update...');
 
         const totalMarks = Object.values(marks).reduce((acc, mark) => acc + mark, 0);
-        const totalPossibleMarks = 750; // Total possible marks
+        const totalPossibleMarks = 1000; // Total possible marks
         const percentage = (totalMarks / totalPossibleMarks) * 100;
         const per = percentage.toFixed(2);
 
