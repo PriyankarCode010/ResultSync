@@ -235,7 +235,7 @@ const Sem6Component = ({ uucmsId, role,session }) => {
             <p className="text-lg">Highest Mark: <span className="font-semibold">{highestMark}</span> {highestMark ? " in  "+highestSubject.replace('_', ' ').toUpperCase() : <></>}</p>
             <p className="text-lg">Lowest Mark: <span className="font-semibold">{lowestMark}</span> {lowestMark ? " in  "+lowestSubject.replace('_', ' ').toUpperCase() : <></>}</p>
             <p className="text-lg">Overall Percentage: <span className="font-semibold">{overallPercentage.toFixed(2)}%</span></p>
-            <p className="text-lg">CGPA: <span className="font-semibold">{cgpa}</span></p>
+            <p className="text-lg">SGPA: <span className="font-semibold">{cgpa}</span></p>
           </div>
         </div>
       </div>
