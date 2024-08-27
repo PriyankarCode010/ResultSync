@@ -66,7 +66,7 @@ const Sem2Component = ({ uucmsId, role, session }) => {
       console.log('Starting update...');
       
       const totalMarks = Object.values(marks).reduce((acc, mark) => acc + mark, 0);
-      const percentage = (totalMarks / 750) * 100;
+      const percentage = (totalMarks / 1000) * 100;
       const per = percentage.toFixed(2);
       const allPassed = Object.values(marks).every(mark => mark >= passingThreshold);
       const status = allPassed;
