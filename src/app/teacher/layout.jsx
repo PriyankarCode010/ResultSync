@@ -27,12 +27,12 @@ export default async function layout({children}){
                 path: "/teacher/result",
                 icon: <PiStudentFill className='h-10 w-10'/>,
             },
-            {
-              id: 3,
-              title: "Assisgnment",
-              path: "/teacher/assignment",
-              icon: <MdAssignmentTurnedIn className='h-10 w-10'/>,
-          },
+          //   {
+          //     id: 3,
+          //     title: "Assisgnment",
+          //     path: "/teacher/assignment",
+          //     icon: <MdAssignmentTurnedIn className='h-10 w-10'/>,
+          // },
         ],
       },
   ];
